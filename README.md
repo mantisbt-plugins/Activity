@@ -1,7 +1,7 @@
 Activity
 ================
 
-Activity Plugin for Mantis
+Activity Plugin for MantisBT v1.2
 By Sergey Marchenko (sergey@mzsl.ru)
 
 
