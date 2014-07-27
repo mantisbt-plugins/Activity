@@ -44,8 +44,8 @@ class ActivityPlugin extends MantisPlugin {
 			'MantisCore' => '1.2.0',
 		);
 
-		$this->author = 'Zetabyte Team';
-		$this->contact = 'support@zetabyte.ru';
+		$this->author = 'Sergey Marchenko';
+		$this->contact = 'sergey@mzsl.ru';
 		$this->url = 'http://zetabyte.ru';
 	}
 
