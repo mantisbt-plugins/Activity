@@ -210,6 +210,14 @@ $t_to = "$t_stats_to_y-$t_stats_to_m-$t_stats_to_d";
 
 <?php
 
+$t_status_legend_position = config_get( 'status_legend_position' );
+
+if ( $t_status_legend_position == STATUS_LEGEND_POSITION_TOP || $t_status_legend_position == STATUS_LEGEND_POSITION_BOTH ) {
+    html_status_legend();
+    echo '<br />';
+}
+
+
 foreach( $t_project_ids as $t_project_id ) {
     $t_bugnotes = activity_get_latest_bugnotes($t_project_id, $t_from, $t_to);
     $t_bugnote_size = count($t_bugnotes);
@@ -256,4 +264,10 @@ foreach( $t_project_ids as $t_project_id ) {
         }
     }
 }
+
+
+if ( $t_status_legend_position == STATUS_LEGEND_POSITION_BOTTOM || $t_status_legend_position == STATUS_LEGEND_POSITION_BOTH ) {
+    html_status_legend();
+}
+
 html_page_bottom();
