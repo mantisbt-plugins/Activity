@@ -63,14 +63,8 @@ class ActivityPlugin extends MantisPlugin {
 		return array( '<a href="' . plugin_page( 'activity_page' ) . '">' . plugin_lang_get( 'activity' ) . '</a>', );
 	}
 
-	function install() {
-//		$result = extension_loaded("xmlreader") && extension_loaded("xmlwriter");
-//		if ( ! $result ) {
-//			#\todo returning false should trigger some error reporting, needs rethinking error_api
-//			error_parameters( plugin_lang_get( 'error_no_xml' ) );
-//			trigger_error( ERROR_PLUGIN_INSTALL_FAILED, ERROR );
-//		}
-//		return $result;
-        return true;
-	}
+    function init() {
+        $t_path = config_get_global('plugin_path' ). plugin_get_current() . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR;
+        set_include_path(get_include_path() . PATH_SEPARATOR . $t_path);
+    }
 }

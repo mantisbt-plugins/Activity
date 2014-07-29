@@ -25,19 +25,12 @@
   */
 require_once( 'core.php' );
 
-/**
- * requires bug_api
- */
 require_once( 'bug_api.php' );
 require_once( 'bugnote_api.php' );
 require_once( 'activity_api.php' );
 
 $t_today = date( 'd:m:Y' );
 
-/**
- * @param $p_date_submitted int
- * @return string
- */
 function format_date_submitted($p_date_submitted) {
     global $t_today;
     $c_date  = date( 'd:m:Y', $p_date_submitted);
@@ -84,6 +77,29 @@ function is_empty_group ($p_group) {
 }
 
 
+function activity_print_styles () {
+    return '<style type="text/css" >
+            .activity-item {
+                margin-left: 1px;
+            }
+
+            .activity-date {
+                color: gray;
+                font-size: 8pt;
+            }
+
+            .activity-note {
+                border: 1px solid #C8C8E8;
+                background-color: #E8E8E8;
+                margin-left: 58px;
+                -webkit-border-radius: 4px;
+                -moz-border-radius: 4px;
+                border-radius: 4px;
+            }
+            </style>';
+}
+
+
 $t_user_id = auth_get_current_user_id();
 
 $f_project = gpc_get_string( 'project', '' );
@@ -124,26 +140,6 @@ if ( ALL_PROJECTS == $t_project_id ) {
 	access_ensure_project_level( config_get( 'view_changelog_threshold' ), $t_project_id );
 	$t_project_ids = user_get_all_accessible_subprojects( $t_user_id, $t_project_id );
 	array_unshift( $t_project_ids, $t_project_id );
-}
-
-function activity_print_styles () {
-    return '<style type="text/css" >
-            .activity-item {
-                margin-left: 1px;
-            }
-
-            .activity-date {
-                color: gray;
-                font-size: 8pt;
-            }
-
-            .activity-note {
-                border: 1px solid #C8C8E8;
-                background-color: #E8E8E8;
-                border-radius: 4px;
-                margin-left: 58px;
-            }
-            </style>';
 }
 
 event_hook('EVENT_LAYOUT_RESOURCES', 'activity_print_styles');

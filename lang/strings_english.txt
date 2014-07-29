@@ -28,7 +28,7 @@
  * @author Marchenko Sergey, sergey@mzsl.ru
  */
 
-$s_plugin_Activity_title = 'Активность пользователей';
-$s_plugin_Activity_description = 'Показывает активность пользователей.';
-$s_plugin_Activity_activity   = 'активность';
-$s_plugin_Activity_get_info_button = 'Выбрать сообщения';
+$s_plugin_Activity_title = 'User activity';
+$s_plugin_Activity_description = 'Show bug notes by date.';
+$s_plugin_Activity_activity   = 'Activity';
+$s_plugin_Activity_get_info_button = 'Select notes';
