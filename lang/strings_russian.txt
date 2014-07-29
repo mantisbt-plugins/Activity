@@ -17,7 +17,7 @@
  * along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-/** English (English)
+/** Russian
  *
  * See the qqq 'language' for message documentation incl. usage of parameters
  * To improve a translation please visit http://translatewiki.net
@@ -29,6 +29,12 @@
  */
 
 $s_plugin_Activity_title = 'Активность пользователей';
+$s_plugin_Activity_config = 'Настройки';
 $s_plugin_Activity_description = 'Показывает активность пользователей.';
 $s_plugin_Activity_activity   = 'активность';
 $s_plugin_Activity_get_info_button = 'Выбрать сообщения';
+$s_plugin_Activity_lbl_show_status_legend = 'Показывать легенду по статусам';
+$s_plugin_Activity_lbl_limit_bug_notes = 'Максимальное количество сообщений';
+$s_plugin_Activity_lbl_day_count = 'Количество дней в фильтре (по умолчанию)';
+$s_plugin_Activity_enabled = 'Вкл';
+$s_plugin_Activity_disabled = 'Выкл';

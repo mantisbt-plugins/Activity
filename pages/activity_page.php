@@ -29,7 +29,10 @@ require_once( 'bug_api.php' );
 require_once( 'bugnote_api.php' );
 require_once( 'activity_api.php' );
 
+
 $t_today = date( 'd:m:Y' );
+$t_day_count = plugin_config_get('day_count');
+$t_from_day  = date('d:m:Y', strtotime(date('Y-m-d')) - SECONDS_PER_DAY * ($t_day_count - 1));
 
 function format_date_submitted($p_date_submitted) {
     global $t_today;
@@ -154,7 +157,7 @@ category_cache_array_rows_by_project( $t_project_ids );
 $t_project_ids_size = count($t_project_ids);
 echo '<br/>';
 
-$t_stats_from_def = $t_today;
+$t_stats_from_def = $t_from_day;
 $t_stats_from_def_ar = explode ( ":", $t_stats_from_def );
 $t_stats_from_def_d = $t_stats_from_def_ar[0];
 $t_stats_from_def_m = $t_stats_from_def_ar[1];
@@ -211,15 +214,19 @@ $t_to = "$t_stats_to_y-$t_stats_to_m-$t_stats_to_d";
 <?php
 
 $t_status_legend_position = config_get( 'status_legend_position' );
+$t_show_status_legend     = plugin_config_get( 'show_status_legend' );
+$t_limit_bug_notes = (int) plugin_config_get( 'limit_bug_notes' , 1000);
 
-if ( $t_status_legend_position == STATUS_LEGEND_POSITION_TOP || $t_status_legend_position == STATUS_LEGEND_POSITION_BOTH ) {
+
+if ($t_show_status_legend && ($t_status_legend_position == STATUS_LEGEND_POSITION_TOP || $t_status_legend_position == STATUS_LEGEND_POSITION_BOTH )) {
     html_status_legend();
     echo '<br />';
 }
 
 
 foreach( $t_project_ids as $t_project_id ) {
-    $t_bugnotes = activity_get_latest_bugnotes($t_project_id, $t_from, $t_to);
+
+    $t_bugnotes = activity_get_latest_bugnotes($t_project_id, $t_from, $t_to, $t_limit_bug_notes);
     $t_bugnote_size = count($t_bugnotes);
     if ($t_project_ids_size != 1 && $t_bugnote_size > 0) {
         $t_project_name = project_get_field( $t_project_id, 'name' );
@@ -266,7 +273,7 @@ foreach( $t_project_ids as $t_project_id ) {
 }
 
 
-if ( $t_status_legend_position == STATUS_LEGEND_POSITION_BOTTOM || $t_status_legend_position == STATUS_LEGEND_POSITION_BOTH ) {
+if ( $t_show_status_legend && ($t_status_legend_position == STATUS_LEGEND_POSITION_BOTTOM || $t_status_legend_position == STATUS_LEGEND_POSITION_BOTH)) {
     html_status_legend();
 }
 

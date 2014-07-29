@@ -37,7 +37,7 @@ class ActivityPlugin extends MantisPlugin {
 	function register( ) {
 		$this->name = plugin_lang_get( 'title' );
 		$this->description = plugin_lang_get( 'description' );
-		$this->page = '';
+		$this->page = 'config';
 
 		$this->version = '1.0';
 		$this->requires = array(
@@ -66,5 +66,13 @@ class ActivityPlugin extends MantisPlugin {
     function init() {
         $t_path = config_get_global('plugin_path' ). plugin_get_current() . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR;
         set_include_path(get_include_path() . PATH_SEPARATOR . $t_path);
+    }
+
+    function config() {
+        return array(
+            'show_status_legend' => ON,
+            'limit_bug_notes'    => 500,
+            'day_count'          => 1
+        );
     }
 }
