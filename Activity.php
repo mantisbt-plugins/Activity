@@ -15,7 +15,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Activity page
+ * Activity plugin
  * @package MantisPlugin
  * @subpackage MantisPlugin
  * @link http://www.mantisbt.org
