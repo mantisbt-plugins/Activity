@@ -30,12 +30,12 @@
 
 $s_plugin_Activity_title = 'Activity';
 $s_plugin_Activity_config = 'Configuration';
-$s_plugin_Activity_description = 'Show bug notes by date.';
+$s_plugin_Activity_description = 'Shows bug notes by creation date.';
 $s_plugin_Activity_activity   = 'Activity';
 $s_plugin_Activity_get_info_button = 'Select notes';
 $s_plugin_Activity_lbl_show_status_legend = 'Show status legend';
 $s_plugin_Activity_lbl_limit_bug_notes = 'Limit bug notes';
-$s_plugin_Activity_lbl_day_count = 'Day count in filter (by default)';
+$s_plugin_Activity_lbl_day_count = 'The number of days in the filter (by default)';
 $s_plugin_Activity_enabled = 'On';
 $s_plugin_Activity_disabled = 'Off';
 
