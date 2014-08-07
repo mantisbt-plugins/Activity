@@ -13,7 +13,7 @@ Install
 
 ```bash
 cd /var/www/mantis/plugins/
-git clone https://github.com/lazar2606/Activity.git
+git clone https://github.com/mantisbt-plugins/Activity.git
 ```
 
 - Go to Manage - Manage Plugins and install the plugin.
