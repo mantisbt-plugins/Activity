@@ -9,15 +9,15 @@
  * @return array
  */
 function activity_get_latest_bugnotes( $p_project_id, $p_date_from, $p_date_to, $p_limit = 500 ) {
-    $c_from = strtotime ($p_date_from);
-    $c_to   = strtotime ($p_date_to) + SECONDS_PER_DAY - 1;
+    $c_from = strtotime ( $p_date_from );
+    $c_to   = strtotime ( $p_date_to ) + SECONDS_PER_DAY - 1;
     if ($c_to === false || $c_from === false) {
-        error_parameters (array($p_date_from, $p_date_to));
-        trigger_error (ERROR_GENERIC, ERROR);
+        error_parameters ( array($p_date_from, $p_date_to) );
+        trigger_error ( ERROR_GENERIC, ERROR );
     }
-    $t_bug_table          = db_get_table ('mantis_bug_table');
-    $t_bugnote_table      = db_get_table ('mantis_bugnote_table');
-    $t_bugnote_text_table = db_get_table ('mantis_bugnote_text_table');
+    $t_bug_table          = db_get_table ( 'mantis_bug_table' );
+    $t_bugnote_table      = db_get_table ( 'mantis_bugnote_table' );
+    $t_bugnote_text_table = db_get_table ( 'mantis_bugnote_text_table' );
 
     $t_query    = "SELECT b.*, t.note
                     FROM      $t_bugnote_table b
@@ -26,9 +26,9 @@ function activity_get_latest_bugnotes( $p_project_id, $p_date_from, $p_date_to, 
                     WHERE bt.project_id=" . db_param () . " AND b.date_submitted >= $c_from AND b.date_submitted <= $c_to" . ' ORDER BY b.id DESC LIMIT ' . $p_limit;
     $t_bugnotes = array();
 
-    $t_result = db_query_bound ($t_query, array($p_project_id));
+    $t_result = db_query_bound ( $t_query, array($p_project_id) );
 
-    while ($row = db_fetch_array ($t_result)) {
+    while ($row = db_fetch_array ( $t_result )) {
         $t_bugnote                  = new BugnoteData();
         $t_bugnote->id              = $row['id'];
         $t_bugnote->bug_id          = $row['bug_id'];
