@@ -1,19 +1,4 @@
 <?php
-# MantisBT - a php based bugtracking system
-# Copyright (C) 2002 - 2014 MantisBT Team - mantisbt-dev@lists.sourceforge.net
-# MantisBT is free software: you can redistribute it and/or modify
-# it under the terms of the GNU General Public License as published by
-# the Free Software Foundation, either version 2 of the License, or
-# (at your option) any later version.
-#
-# MantisBT is distributed in the hope that it will be useful,
-# but WITHOUT ANY WARRANTY; without even the implied warranty of
-# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-# GNU General Public License for more details.
-#
-# You should have received a copy of the GNU General Public License
-# along with MantisBT. If not, see <http://www.gnu.org/licenses/>.
-
 auth_reauthenticate( );
 access_ensure_global_level( config_get( 'manage_plugin_threshold' ) );
 
@@ -45,6 +30,19 @@ print_manage_menu( );
             </td>
             <td class="center">
                 <label><input type="radio" name="show_status_legend" value="0" <?php echo( OFF == plugin_config_get( 'show_status_legend' ) ) ? 'checked="checked" ' : ''?>/>
+                    <?php echo plugin_lang_get( 'disabled' )?></label>
+            </td>
+        </tr>
+        <tr <?php echo helper_alternate_class( )?>>
+            <td class="category">
+                <?php echo plugin_lang_get( 'lbl_show_avatar' )?>
+            </td>
+            <td class="center">
+                <label><input type="radio" name="show_avatar" value="1" <?php echo( ON == plugin_config_get( 'show_avatar' ) ) ? 'checked="checked" ' : ''?>/>
+                    <?php echo plugin_lang_get( 'enabled' )?></label>
+            </td>
+            <td class="center">
+                <label><input type="radio" name="show_avatar" value="0" <?php echo( OFF == plugin_config_get( 'show_avatar' ) ) ? 'checked="checked" ' : ''?>/>
                     <?php echo plugin_lang_get( 'disabled' )?></label>
             </td>
         </tr>

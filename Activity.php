@@ -15,7 +15,7 @@
 # along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Activity plugin
+ * Activity page
  * @package MantisPlugin
  * @subpackage MantisPlugin
  * @link http://www.mantisbt.org
@@ -64,7 +64,7 @@ class ActivityPlugin extends MantisPlugin {
 	}
 
     function init() {
-        $t_path = config_get_global('plugin_path' ). plugin_get_current() . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR;
+        $t_path = config_get_global( 'plugin_path' ). plugin_get_current() . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR;
         set_include_path(get_include_path() . PATH_SEPARATOR . $t_path);
     }
 
@@ -72,7 +72,8 @@ class ActivityPlugin extends MantisPlugin {
         return array(
             'show_status_legend' => ON,
             'limit_bug_notes'    => 500,
-            'day_count'          => 1
+            'day_count'          => 1,
+            'show_avatar'        => OFF
         );
     }
 }
