@@ -90,14 +90,26 @@ function activity_print_styles() {
                 font-size: 8pt;
                 padding: 5px;
             }
+
+            .activity-table .avatar {
+                float: none;
+            }
+
+            .activity-avatar img {
+                display: block;
+                margin-left: auto;
+                margin-right: auto
+            }
             .activity-note {
                 border: 1px solid #C8C8E8;
                 background-color: #E8E8E8;
                 -webkit-border-radius: 4px;
                 -moz-border-radius: 4px;
                 border-radius: 4px;
-                max-width: 658px;
+                /*max-width: 658px;
                 overflow-x: hidden;
+                */
+
             }
             td.activity-center {
                 text-align: center;
@@ -183,7 +195,9 @@ $t_from = "$t_stats_from_y-$t_stats_from_m-$t_stats_from_d";
 $t_to   = "$t_stats_to_y-$t_stats_to_m-$t_stats_to_d";
 
 ?>
-<form method="post" action="<?php echo string_attribute ( plugin_page ( 'activity_page' ) ) ?>">
+<form method="get" name="activity_page_form" action="<?php echo string_attribute ( plugin_page ( 'activity_page' ) ) ?>">
+    <input type="hidden" name="page" value="<?php echo htmlspecialchars($f_page); ?>" />
+    <input type="hidden" id="activity_project_id" name="project_id" value="<?php echo htmlspecialchars($f_project_id); ?>" />
     <table border="0" class="width100" cellspacing="0">
         <tr class="row-2">
             <td class="category" width="25%">
@@ -203,7 +217,6 @@ $t_to   = "$t_stats_to_y-$t_stats_to_m-$t_stats_to_d";
         <tr>
             <td class="center" colspan="2">
                 <input type="submit" class="button"
-                       name="get_bugnote_stats_button"
                        value="<?php echo plugin_lang_get ( 'get_info_button' ) ?>"
                     />
             </td>
@@ -222,6 +235,7 @@ $t_limit_bug_notes        = (int)plugin_config_get ( 'limit_bug_notes', 1000 );
 $t_update_bug_threshold   = config_get ( 'update_bug_threshold' );
 $t_icon_path              = config_get ( 'icon_path' );
 $t_show_priority_text     = config_get ( 'show_priority_text' );
+$t_use_javascript         = config_get ( 'use_javascript', ON );
 
 if ($t_show_status_legend && ($t_status_legend_position == STATUS_LEGEND_POSITION_TOP || $t_status_legend_position == STATUS_LEGEND_POSITION_BOTH)) {
     html_status_legend ();
@@ -235,7 +249,14 @@ foreach ( $t_project_ids as $t_project_id ) {
     $t_bugnote_size = count ( $t_bugnotes );
     if ($t_project_ids_size != 1 && $t_bugnote_size > 0) {
         $t_project_name      = project_get_field ( $t_project_id, 'name' );
-        $t_project_name_link = '<a href="' . plugin_page ( 'activity_page' ) . '&project_id=' . $t_project_id . '">' . $t_project_name . '</a>';
+        $t_project_name_href = '';
+        $t_project_name_link = '';
+        if ($t_use_javascript) {
+            $t_project_name_href = 'javascript: document.getElementById(\'activity_project_id\').value=\'' . $t_project_id . '\'; document.forms.activity_page_form.submit();';
+            $t_project_name_link = '<a href="' . $t_project_name_href . '">' . $t_project_name . '</a>';
+        } else {
+            $t_project_name_link = $t_project_name;
+        }
         echo '<h3 style="text-align: center">' . $t_project_name_link . '</h3><hr/>';
     }
 
@@ -253,7 +274,7 @@ foreach ( $t_project_ids as $t_project_id ) {
             $t_date_submitted   = date ( config_get ( 'complete_date_format' ), bug_get_field ( $t_bug_id, 'date_submitted' ) );
             $t_background_color = 'background-color: ' . $t_status_color;
 
-            echo '<div align="center">', '<table cellspacing="0" class="width75"><tbody>', '<tr><td class="news-heading-public activity-center" width="9%" style="' . $t_background_color . '">';
+            echo '<div align="center">', '<table cellspacing="0" class="width75 activity-table"><tbody>', '<tr><td class="news-heading-public activity-center" width="65px" style="' . $t_background_color . '">';
             print_bug_link ( $t_bug_id, true );
             echo '<br/>';
 
@@ -276,9 +297,9 @@ foreach ( $t_project_ids as $t_project_id ) {
                 $t_note           = string_display_links ( trim ( $t_bugnote->note ) );
                 $t_bugnote_link   = string_get_bugnote_view_link2 ( $t_bugnote->bug_id, $t_bugnote->id, $t_user_id );
                 if (!empty($t_note)) {
-                    echo '<tr><td style="vertical-align: top; text-align: center;"><div class="activity-date">', $t_date_submitted, '</div>', '<div class="activity-avatar">';
+                    echo '<tr><td align="center" style="vertical-align: top; text-align: center;"><div class="activity-date">', $t_date_submitted, '</div>', '';
                     if ($t_show_avatar && !empty($t_user_id)) print_avatar ( $t_user_id, 60 );
-                    echo '</div></td>';
+                    echo '</td>';
                     echo '<td style="vertical-align: top;"><div class="activity-item">', '<span class="bold">', $t_user_link, '</span> (', $t_bugnote_link, ')</div>', '<div class="activity-note">', $t_note, '</div>', '</div></td></tr>';
                 }
             }
