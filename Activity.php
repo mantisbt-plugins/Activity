@@ -24,48 +24,47 @@
 /**
  * requires MantisPlugin.class.php
  */
-require_once(config_get ( 'class_path' ) . 'MantisPlugin.class.php');
+require_once(config_get( 'class_path' ) . 'MantisPlugin.class.php');
 
 /**
  * Activity Class
  */
-class ActivityPlugin extends MantisPlugin
-{
+class ActivityPlugin extends MantisPlugin {
 
-    /**
-     *  A method that populates the plugin information and minimum requirements.
-     */
-    function register() {
-        $this->name        = plugin_lang_get ( 'title' );
-        $this->description = plugin_lang_get ( 'description' );
-        $this->page        = 'config';
+	/**
+	 *  A method that populates the plugin information and minimum requirements.
+	 */
+	function register() {
+		$this->name        = plugin_lang_get( 'title' );
+		$this->description = plugin_lang_get( 'description' );
+		$this->page        = 'config';
 
-        $this->version  = '1.0';
-        $this->requires = array('MantisCore' => '1.2.0',);
+		$this->version  = '1.0';
+		$this->requires = array('MantisCore' => '1.2.0',);
 
-        $this->author  = 'Sergey Marchenko';
-        $this->contact = 'sergey@mzsl.ru';
-        $this->url     = 'http://zetabyte.ru';
-    }
+		$this->author  = 'Sergey Marchenko';
+		$this->contact = 'sergey@mzsl.ru';
+		$this->url     = 'http://zetabyte.ru';
+	}
 
-    /**
-     * Default plugin configuration.
-     */
-    function hooks() {
-        $hooks = array('EVENT_MENU_MAIN' => 'activity_menu',);
-        return $hooks;
-    }
+	/**
+	 * Default plugin configuration.
+	 */
+	function hooks() {
+		$hooks = array('EVENT_MENU_MAIN' => 'activity_menu',);
+		return $hooks;
+	}
 
-    function activity_menu() {
-        return array('<a href="' . plugin_page ( 'activity_page' ) . '">' . plugin_lang_get ( 'activity' ) . '</a>',);
-    }
+	function activity_menu() {
+		return array('<a href="' . plugin_page( 'activity_page' ) . '">' . plugin_lang_get( 'activity' ) . '</a>',);
+	}
 
-    function init() {
-        $t_path = config_get_global ( 'plugin_path' ) . plugin_get_current () . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR;
-        set_include_path ( get_include_path () . PATH_SEPARATOR . $t_path );
-    }
+	function init() {
+		$t_path = config_get_global( 'plugin_path' ) . plugin_get_current() . DIRECTORY_SEPARATOR . 'core' . DIRECTORY_SEPARATOR;
+		set_include_path( get_include_path() . PATH_SEPARATOR . $t_path );
+	}
 
-    function config() {
-        return array('show_status_legend' => ON, 'limit_bug_notes'    => 500, 'day_count'          => 1, 'show_avatar'        => OFF);
-    }
+	function config() {
+		return array('show_status_legend' => ON, 'limit_bug_notes' => 500, 'day_count' => 1, 'show_avatar' => OFF);
+	}
 }
