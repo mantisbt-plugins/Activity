@@ -115,7 +115,7 @@ if( ALL_PROJECTS == $t_project_id ) {
 		}
 	}
 } else {
-	access_ensure_project_level( config_get( 'view_changelog_threshold' ), $t_project_id );
+	//access_ensure_project_level( config_get( 'view_changelog_threshold' ), $t_project_id );
 	$t_project_ids = user_get_all_accessible_subprojects( $t_user_id, $t_project_id );
 	array_unshift( $t_project_ids, $t_project_id );
 }
