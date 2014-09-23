@@ -78,46 +78,6 @@ function is_empty_group( $p_group ) {
 	return true;
 }
 
-
-function activity_print_styles() {
-	return '<style type="text/css" >
-            .activity-item {
-                margin-left: 1px;
-            }
-
-            .activity-date, .activity-avatar {
-                color: gray;
-                font-size: 8pt;
-                padding: 5px;
-            }
-
-            .activity-table .avatar {
-                float: none;
-            }
-
-            .activity-avatar img {
-                display: block;
-                margin-left: auto;
-                margin-right: auto
-            }
-            .activity-note {
-                border: 1px solid #C8C8E8;
-                background-color: #E8E8E8;
-                -webkit-border-radius: 4px;
-                -moz-border-radius: 4px;
-                border-radius: 4px;
-                /*max-width: 658px;
-                overflow-x: hidden;
-                */
-
-            }
-            td.activity-center {
-                text-align: center;
-            }
-            </style>';
-}
-
-
 $t_user_id = auth_get_current_user_id();
 
 $f_project = gpc_get_string( 'project', '' );
@@ -159,8 +119,6 @@ if( ALL_PROJECTS == $t_project_id ) {
 	$t_project_ids = user_get_all_accessible_subprojects( $t_user_id, $t_project_id );
 	array_unshift( $t_project_ids, $t_project_id );
 }
-
-event_hook( 'EVENT_LAYOUT_RESOURCES', 'activity_print_styles' );
 
 html_page_top( plugin_lang_get( 'activity' ) );
 

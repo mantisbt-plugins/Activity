@@ -51,7 +51,9 @@ class ActivityPlugin extends MantisPlugin {
 	 * Default plugin configuration.
 	 */
 	function hooks() {
-		$hooks = array('EVENT_MENU_MAIN' => 'activity_menu',);
+		$hooks = array('EVENT_MENU_MAIN' => 'activity_menu',
+					   'EVENT_LAYOUT_RESOURCES' => 'resources');
+
 		return $hooks;
 	}
 
@@ -67,4 +69,12 @@ class ActivityPlugin extends MantisPlugin {
 	function config() {
 		return array('show_status_legend' => ON, 'limit_bug_notes' => 500, 'day_count' => 1, 'show_avatar' => OFF);
 	}
+
+	/**
+	 * Create the resource link to load the jQuery library.
+	 */
+	function resources( $p_event ) {
+		return '<link rel="stylesheet" type="text/css" href="' . plugin_file( 'activity.css' ) . '"/>';
+	}
+
 }
