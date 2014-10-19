@@ -1,4 +1,5 @@
 <?php
+
 # MantisBT - a php based bugtracking system
 
 # MantisBT is free software: you can redistribute it and/or modify
@@ -28,6 +29,7 @@ require_once('bugnote_api.php');
 require_once('icon_api.php');
 require_once('activity_api.php');
 
+$t_filter = array();
 
 $t_today = date( 'd:m:Y' );
 $t_day_count = plugin_config_get( 'day_count' );
@@ -38,6 +40,33 @@ function format_date_submitted( $p_date_submitted ) {
 	$c_date   = date( 'd:m:Y', $p_date_submitted );
 	$c_format = $t_today == $c_date ? 'H:i:s' : 'd.m.y';
 	return date( $c_format, $p_date_submitted );
+}
+
+/**
+ *  print note reporter field
+ */
+function print_filter_note_user_id2() {
+	global $t_select_modifier, $t_filter;
+	?>
+	<!-- BUGNOTE REPORTER -->
+	<select <?php echo $t_select_modifier; ?> name="<?php echo FILTER_PROPERTY_NOTE_USER_ID; ?>[]">
+		<option
+			value="<?php echo META_FILTER_ANY ?>" <?php check_selected( $t_filter[FILTER_PROPERTY_NOTE_USER_ID], META_FILTER_ANY ); ?>>
+			[<?php echo lang_get( 'any' ) ?>]
+		</option>
+		<?php if( access_has_project_level( config_get( 'view_handler_threshold' ) ) ) { ?>
+			<?php
+			if( access_has_project_level( config_get( 'handle_bug_threshold' ) ) ) {
+				echo '<option value="' . META_FILTER_MYSELF . '" ';
+				check_selected( $t_filter[FILTER_PROPERTY_NOTE_USER_ID], META_FILTER_MYSELF );
+				echo '>[' . lang_get( 'myself' ) . ']</option>';
+			}
+
+			print_note_option_list( $t_filter[FILTER_PROPERTY_NOTE_USER_ID] );
+		}
+		?>
+	</select>
+<?php
 }
 
 function string_get_bugnote_view_link2( $p_bug_id, $p_bugnote_id, $p_user_id = null, $p_detail_info = true, $p_fqdn = false ) {
@@ -79,6 +108,10 @@ function is_empty_group( $p_group ) {
 }
 
 $t_user_id = auth_get_current_user_id();
+
+$f_note_user_id_arr = gpc_get_int_array( 'note_user_id', array() );
+$f_note_user_id = empty($f_note_user_id_arr) ? null : $f_note_user_id_arr[0];
+if( $f_note_user_id == -1 ) $f_note_user_id = auth_get_current_user_id();
 
 $f_project = gpc_get_string( 'project', '' );
 $f_page = gpc_get_string( 'page', '' );
@@ -152,6 +185,7 @@ $t_stats_to_y = gpc_get_int( 'end_year', $t_stats_to_def_y );
 $t_from = "$t_stats_from_y-$t_stats_from_m-$t_stats_from_d";
 $t_to = "$t_stats_to_y-$t_stats_to_m-$t_stats_to_d";
 
+
 ?>
 	<form method="get" name="activity_page_form"
 		  action="<?php echo string_attribute( plugin_page( 'activity_page' ) ) ?>">
@@ -162,7 +196,6 @@ $t_to = "$t_stats_to_y-$t_stats_to_m-$t_stats_to_d";
 			<tr class="row-2">
 				<td class="category" width="25%">
 					<?php
-					$t_filter = array();
 					$t_filter['do_filter_by_date'] = 'on';
 					$t_filter['start_day'] = $t_stats_from_d;
 					$t_filter['start_month'] = $t_stats_from_m;
@@ -171,6 +204,13 @@ $t_to = "$t_stats_to_y-$t_stats_to_m-$t_stats_to_d";
 					$t_filter['end_month'] = $t_stats_to_m;
 					$t_filter['end_year'] = $t_stats_to_y;
 					print_filter_do_filter_by_date( true );
+					?>
+				</td>
+				<td class="category">
+					<?php
+					echo lang_get( 'note_user_id' ) . ':&nbsp;';
+					$t_filter[FILTER_PROPERTY_NOTE_USER_ID] = $f_note_user_id_arr;
+					print_filter_note_user_id2();
 					?>
 				</td>
 			</tr>
@@ -204,28 +244,28 @@ if( $t_show_status_legend && ($t_status_legend_position == STATUS_LEGEND_POSITIO
 
 
 foreach ( $t_project_ids as $t_project_id ) {
+	$t_bugnotes          = activity_get_latest_bugnotes( $t_project_id, $t_from, $t_to, $f_note_user_id, $t_limit_bug_notes );
+	$t_bugnote_size      = count( $t_bugnotes );
+	$t_project_name_link = '';
+	$t_project_html      = '';
 
-	$t_bugnotes     = activity_get_latest_bugnotes( $t_project_id, $t_from, $t_to, $t_limit_bug_notes );
-	$t_bugnote_size = count( $t_bugnotes );
-	if( $t_project_ids_size != 1 && $t_bugnote_size > 0 ) {
-		$t_project_name      = project_get_field( $t_project_id, 'name' );
-		$t_project_name_href = '';
-		$t_project_name_link = '';
-		if( $t_use_javascript ) {
-			$t_project_name_href = 'javascript: document.getElementById(\'activity_project_id\').value=\'' . $t_project_id . '\'; document.forms.activity_page_form.submit();';
-			$t_project_name_link = '<a href="' . $t_project_name_href . '">' . $t_project_name . '</a>';
-		} else {
-			$t_project_name_link = $t_project_name;
-		}
-		echo '<h3 style="text-align: center">' . $t_project_name_link . '</h3><hr/>';
+	if( $t_bugnote_size == 0 ) continue;
+
+	$t_project_name      = project_get_field( $t_project_id, 'name' );
+	$t_project_name_href = '';
+	if( $t_use_javascript && $t_project_ids_size > 1 ) {
+		$t_project_name_href = 'javascript: document.getElementById(\'activity_project_id\').value=\'' . $t_project_id . '\'; document.forms.activity_page_form.submit();';
+		$t_project_name_link = '<a href="' . $t_project_name_href . '">' . $t_project_name . '</a>';
+	} else {
+		$t_project_name_link = $t_project_name;
 	}
 
-	$t_group_by_bug = array();
-	foreach ( $t_bugnotes as $t_bugnote ) {
-		if( empty($t_group_by_bug[$t_bugnote->bug_id]) ) $t_group_by_bug[$t_bugnote->bug_id] = array();
+	$t_group_by_bug      = activity_group_by_bug( $t_bugnotes );
+	$t_issue_size        = count( $t_group_by_bug );
+	$t_issue_size_html   = '<span title="' . plugin_lang_get( 'issues' ) . '">' . $t_issue_size . '</span>';
+	$t_bugnote_size_html = '<span title="' . plugin_lang_get( 'notes' ) . '">' . $t_bugnote_size . '</span>';
 
-		$t_group_by_bug[$t_bugnote->bug_id][] = $t_bugnote;
-	}
+	echo '<h3 style="text-align: center">' . $t_project_name_link . ' (' . $t_issue_size_html . '/' . $t_bugnote_size_html . ')</h3><hr class="activity-hr"/>';
 
 	foreach ( $t_group_by_bug as $t_bug_id => $t_group ) {
 		if( !empty($t_group) && !is_empty_group( $t_group ) ) {
@@ -248,14 +288,16 @@ foreach ( $t_project_ids as $t_project_id ) {
 
 			echo '</td><td class="news-heading-public" style="' . $t_background_color . '"><span class="bold">' . $t_summary . '</span> - <span class="italic-small">' . $t_date_submitted . '</span>', '</td></tr>';
 
-
 			foreach ( $t_group as $t_bugnote ) {
+
+
 				$t_date_submitted = format_date_submitted( $t_bugnote->date_submitted );
 				$t_user_id        = VS_PRIVATE == $t_bugnote->view_state ? null : $t_bugnote->reporter_id;
 				$t_user_name      = $t_user_id != null ? user_get_name( $t_user_id ) : lang_get( 'private' );
 				$t_user_link      = $t_user_id != null ? '<a href="view_user_page.php?id=' . $t_user_id . '">' . $t_user_name . '</a>' : $t_user_name;
 				$t_note           = string_display_links( trim( $t_bugnote->note ) );
 				$t_bugnote_link   = string_get_bugnote_view_link2( $t_bugnote->bug_id, $t_bugnote->id, $t_user_id );
+
 				if( !empty($t_note) ) {
 					echo '<tr><td align="center" style="vertical-align: top; text-align: center;"><div class="activity-date">', $t_date_submitted, '</div>', '';
 					if( $t_show_avatar && !empty($t_user_id) ) print_avatar( $t_user_id, 60 );
@@ -263,6 +305,7 @@ foreach ( $t_project_ids as $t_project_id ) {
 					echo '<td style="vertical-align: top;"><div class="activity-item">', '<span class="bold">', $t_user_link, '</span> (', $t_bugnote_link, ')</div>', '<div class="activity-note">', $t_note, '</div>', '</div></td></tr>';
 				}
 			}
+
 			echo '</table>', '</div>';
 		}
 	}

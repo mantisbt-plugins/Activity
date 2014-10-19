@@ -67,7 +67,16 @@ class ActivityPlugin extends MantisPlugin {
 	}
 
 	function config() {
-		return array('show_status_legend' => ON, 'limit_bug_notes' => 500, 'day_count' => 1, 'show_avatar' => OFF);
+		return array('show_status_legend' => ON,
+					 'limit_bug_notes' => 500,
+					 'day_count' => 1,
+					 'show_avatar' => OFF,
+					 'notify_login' => 'admin',
+					 'notify_subject' => 'Mantis report: {user}, {date}',
+					 'notify_project' => 0,
+					 'notify_users' => array(),
+					 'notify_note_users' => array()
+		);
 	}
 
 	/**

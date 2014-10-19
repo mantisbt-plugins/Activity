@@ -23,26 +23,38 @@ $f_show_status_legend = gpc_get_int( 'show_status_legend', plugin_config_get( 's
 $f_show_avatar        = gpc_get_int( 'show_avatar', plugin_config_get( 'show_avatar' ) );
 $f_limit_bug_notes    = gpc_get_int( 'limit_bug_notes', plugin_config_get( 'limit_bug_notes' ) );
 $f_day_count          = gpc_get_int( 'day_count', plugin_config_get( 'day_count' ) );
+$f_notify_login       = gpc_get_string( 'notify_login', plugin_config_get( 'notify_login' ) );
+$f_notify_subject     = gpc_get_string( 'notify_subject', plugin_config_get( 'notify_subject' ) );
+$f_notify_project     = gpc_get_int( 'notify_project', plugin_config_get( 'notify_project' ) );
+$f_notify_users       = gpc_get_int_array( 'notify_users', plugin_config_get( 'notify_users' ) );
+$f_notify_note_users  = gpc_get_int_array( 'notify_note_users', plugin_config_get( 'notify_note_users' ) );
 
 if( $f_limit_bug_notes < 1 ) $f_limit_bug_notes = 1;
 if( $f_day_count < 1 ) $f_day_count = 1;
 
-if( plugin_config_get( 'show_status_legend' ) != $f_show_status_legend ) {
+if( plugin_config_get( 'show_status_legend' ) != $f_show_status_legend )
 	plugin_config_set( 'show_status_legend', $f_show_status_legend );
-}
 
-if( plugin_config_get( 'show_avatar' ) != $f_show_avatar ) {
+if( plugin_config_get( 'show_avatar' ) != $f_show_avatar )
 	plugin_config_set( 'show_avatar', $f_show_avatar );
-}
 
-if( plugin_config_get( 'limit_bug_notes' ) != $f_limit_bug_notes ) {
+if( plugin_config_get( 'limit_bug_notes' ) != $f_limit_bug_notes )
 	plugin_config_set( 'limit_bug_notes', $f_limit_bug_notes );
-}
 
-if( plugin_config_get( 'day_count' ) != $f_day_count ) {
+if( plugin_config_get( 'day_count' ) != $f_day_count )
 	plugin_config_set( 'day_count', $f_day_count );
-}
 
+if( plugin_config_get( 'notify_login' ) != $f_notify_login )
+	plugin_config_set( 'notify_login', $f_notify_login );
+
+if( plugin_config_get( 'notify_subject' ) != $f_notify_subject )
+	plugin_config_set( 'notify_subject', $f_notify_subject );
+
+if( plugin_config_get( 'notify_project' ) != $f_notify_project )
+	plugin_config_set( 'notify_project', $f_notify_project );
+
+plugin_config_set( 'notify_users', $f_notify_users );
+plugin_config_set( 'notify_note_users', $f_notify_note_users );
 
 form_security_purge( 'plugin_Activity_config_edit' );
 

@@ -37,5 +37,14 @@ $s_plugin_Activity_lbl_show_status_legend = 'Показывать легенду
 $s_plugin_Activity_lbl_show_avatar = 'Показывать аватар';
 $s_plugin_Activity_lbl_limit_bug_notes = 'Максимальное количество сообщений';
 $s_plugin_Activity_lbl_day_count = 'Количество дней в фильтре (по умолчанию)';
+$s_plugin_Activity_lbl_notify = 'Отправка сообщений от пользователей на email <small>(добавьте запуск скрипта "php [mantis root]/plugins/Activity/scripts/notify.php" в cron)</small>';
+$s_plugin_Activity_lbl_notify_login = 'Запускать скрипт от аккаунта';
+$s_plugin_Activity_lbl_notify_subject = 'Тема письма <small>{user} - от кого комментарии, {date} - дата отправки</small>';
+$s_plugin_Activity_lbl_notify_project    = 'Проект';
+$s_plugin_Activity_lbl_notify_users    = 'Кому отправлять уведомления';
+$s_plugin_Activity_lbl_notify_note_users    = 'Отправлять комментарии от';
+
 $s_plugin_Activity_enabled = 'Вкл';
 $s_plugin_Activity_disabled = 'Выкл';
+$s_plugin_Activity_issues   = 'Количество инцидентов';
+$s_plugin_Activity_notes    = 'Количество сообщений';
