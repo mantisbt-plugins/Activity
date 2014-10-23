@@ -136,7 +136,31 @@ function activity_print_user_option_list( $p_name ) {
 				<td class="center" colspan="2">
 					<label><?php activity_print_user_option_list( 'notify_note_users' ); ?></label>
 				</td>
+			</tr>			
+			<tr <?php echo helper_alternate_class() ?>>
+				<td class="category">
+					<?php echo plugin_lang_get( 'lbl_notify_use_html' ) ?>
+				</td>
+				<td class="center">
+					<label><input type="radio" name="notify_use_html"
+								  value="1" <?php echo (ON == plugin_config_get( 'notify_use_html' )) ? 'checked="checked" ' : '' ?>/>
+						<?php echo plugin_lang_get( 'enabled' ) ?></label>
+				</td>
+				<td class="center">
+					<label><input type="radio" name="notify_use_html"
+								  value="0" <?php echo (OFF == plugin_config_get( 'notify_use_html' )) ? 'checked="checked" ' : '' ?>/>
+						<?php echo plugin_lang_get( 'disabled' ) ?></label>
+				</td>
 			</tr>
+			<tr <?php echo helper_alternate_class() ?>>
+				<td class="category">
+					<?php echo plugin_lang_get( 'lbl_notify_path' ) ?>
+				</td>
+				<td class="center" colspan="2">
+					<label><input type="text" name="notify_path" maxlength="50" size="50"
+								  value="<?php echo(plugin_config_get( 'notify_path' )) ?>"/></label>
+				</td>
+			</tr>			
 			<tr>
 				<td class="center" colspan="3">
 					<input type="submit" class="button" value="<?php echo lang_get( 'change_configuration' ) ?>"/>

@@ -75,7 +75,9 @@ class ActivityPlugin extends MantisPlugin {
 					 'notify_subject' => 'Mantis report: {user}, {date}',
 					 'notify_project' => 0,
 					 'notify_users' => array(),
-					 'notify_note_users' => array()
+					 'notify_note_users' => array(),
+					 'notify_use_html' => OFF,
+					 'notify_path' => ''
 		);
 	}
 

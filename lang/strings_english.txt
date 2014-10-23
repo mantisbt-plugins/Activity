@@ -43,8 +43,11 @@ $s_plugin_Activity_lbl_notify_subject = 'Subject of the email';
 $s_plugin_Activity_lbl_notify_project    = 'Project';
 $s_plugin_Activity_lbl_notify_users    = 'Managers';
 $s_plugin_Activity_lbl_notify_note_users    = 'Note By';
+$s_plugin_Activity_lbl_notify_use_html    = 'Use HTML messages';
+$s_plugin_Activity_lbl_notify_path    = 'URL to your mantis installation (example: http://mantisbt.org/bugs/)';
 $s_plugin_Activity_enabled = 'On';
 $s_plugin_Activity_disabled = 'Off';
 $s_plugin_Activity_issues   = 'Issues';
 $s_plugin_Activity_notes    = 'Notes';
-
+$s_plugin_Activity_total_issues   = 'Total issues';
+$s_plugin_Activity_total_notes    = 'Total notes';

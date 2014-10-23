@@ -242,14 +242,39 @@ if( $t_show_status_legend && ($t_status_legend_position == STATUS_LEGEND_POSITIO
 	echo '<br />';
 }
 
-
+$t_project_bugs = array();
+$t_project_size = 0;
+$t_total_issues = 0;
+$t_total_notes  = 0;
 foreach ( $t_project_ids as $t_project_id ) {
-	$t_bugnotes          = activity_get_latest_bugnotes( $t_project_id, $t_from, $t_to, $f_note_user_id, $t_limit_bug_notes );
-	$t_bugnote_size      = count( $t_bugnotes );
+	$t_bug_notes     = activity_get_latest_bugnotes( $t_project_id, $t_from, $t_to, $f_note_user_id, $t_limit_bug_notes );
+	$t_bug_note_size = count( $t_bug_notes );
+	if( $t_bug_note_size == 0 ) continue;
+
+	$t_bugs      = activity_group_by_bug( $t_bug_notes );
+	$t_bugs_size = count( $t_bugs );
+
+	$t_project_bugs[$t_project_id]['bugs']      = $t_bugs;
+	$t_project_bugs[$t_project_id]['note_size'] = $t_bug_note_size;
+	$t_project_bugs[$t_project_id]['bugs_size'] = $t_bugs_size;
+	$t_total_notes += $t_bug_note_size;
+	$t_total_issues += $t_bugs_size;
+	$t_project_size++;
+}
+
+if( $t_project_size > 1 ) {
+	echo '<h3 style="text-align: center">',
+	plugin_lang_get( 'total_issues' ), ': ', $t_total_issues, ', ',
+	plugin_lang_get( 'total_notes' ), ': ', $t_total_notes,
+	'</h3><hr class="activity-hr"/>';
+}
+
+foreach ( $t_project_bugs as $t_project_id => $t_project_data ) {
+	$t_bug_note_size     = $t_project_data['note_size'];
 	$t_project_name_link = '';
 	$t_project_html      = '';
 
-	if( $t_bugnote_size == 0 ) continue;
+	if( $t_bug_note_size == 0 ) continue;
 
 	$t_project_name      = project_get_field( $t_project_id, 'name' );
 	$t_project_name_href = '';
@@ -260,14 +285,14 @@ foreach ( $t_project_ids as $t_project_id ) {
 		$t_project_name_link = $t_project_name;
 	}
 
-	$t_group_by_bug      = activity_group_by_bug( $t_bugnotes );
-	$t_issue_size        = count( $t_group_by_bug );
+	$t_bugs              = $t_project_data['bugs'];
+	$t_issue_size        = $t_project_data['bugs_size'];
 	$t_issue_size_html   = '<span title="' . plugin_lang_get( 'issues' ) . '">' . $t_issue_size . '</span>';
-	$t_bugnote_size_html = '<span title="' . plugin_lang_get( 'notes' ) . '">' . $t_bugnote_size . '</span>';
+	$t_bugnote_size_html = '<span title="' . plugin_lang_get( 'notes' ) . '">' . $t_bug_note_size . '</span>';
 
 	echo '<h3 style="text-align: center">' . $t_project_name_link . ' (' . $t_issue_size_html . '/' . $t_bugnote_size_html . ')</h3><hr class="activity-hr"/>';
 
-	foreach ( $t_group_by_bug as $t_bug_id => $t_group ) {
+	foreach ( $t_bugs as $t_bug_id => $t_group ) {
 		if( !empty($t_group) && !is_empty_group( $t_group ) ) {
 			$t_summary          = bug_get_field( $t_bug_id, 'summary' );
 			$t_status_color     = get_status_color( bug_get_field( $t_bug_id, 'status' ), $t_user_id, $t_project_id );

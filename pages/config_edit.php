@@ -28,6 +28,8 @@ $f_notify_subject     = gpc_get_string( 'notify_subject', plugin_config_get( 'no
 $f_notify_project     = gpc_get_int( 'notify_project', plugin_config_get( 'notify_project' ) );
 $f_notify_users       = gpc_get_int_array( 'notify_users', plugin_config_get( 'notify_users' ) );
 $f_notify_note_users  = gpc_get_int_array( 'notify_note_users', plugin_config_get( 'notify_note_users' ) );
+$f_notify_use_html     = gpc_get_string( 'notify_use_html', plugin_config_get( 'notify_use_html' ) );
+$f_notify_path     = gpc_get_string( 'notify_path', plugin_config_get( 'notify_path' ) );
 
 if( $f_limit_bug_notes < 1 ) $f_limit_bug_notes = 1;
 if( $f_day_count < 1 ) $f_day_count = 1;
@@ -52,6 +54,12 @@ if( plugin_config_get( 'notify_subject' ) != $f_notify_subject )
 
 if( plugin_config_get( 'notify_project' ) != $f_notify_project )
 	plugin_config_set( 'notify_project', $f_notify_project );
+
+if( plugin_config_get( 'notify_use_html' ) != $f_notify_use_html )
+	plugin_config_set( 'notify_use_html', $f_notify_use_html );
+
+if( plugin_config_get( 'notify_path' ) != $f_notify_path )
+	plugin_config_set( 'notify_path', $f_notify_path );
 
 plugin_config_set( 'notify_users', $f_notify_users );
 plugin_config_set( 'notify_note_users', $f_notify_note_users );

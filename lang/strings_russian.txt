@@ -43,8 +43,11 @@ $s_plugin_Activity_lbl_notify_subject = 'Тема письма <small>{user} - �
 $s_plugin_Activity_lbl_notify_project    = 'Проект';
 $s_plugin_Activity_lbl_notify_users    = 'Кому отправлять уведомления';
 $s_plugin_Activity_lbl_notify_note_users    = 'Отправлять комментарии от';
-
+$s_plugin_Activity_lbl_notify_use_html    = 'Отправлять письма в формате HTML';
+$s_plugin_Activity_lbl_notify_path    = 'URL к вашей инсталляции mantis (пример: http://mantisbt.org/bugs/)';
 $s_plugin_Activity_enabled = 'Вкл';
 $s_plugin_Activity_disabled = 'Выкл';
 $s_plugin_Activity_issues   = 'Количество инцидентов';
 $s_plugin_Activity_notes    = 'Количество сообщений';
+$s_plugin_Activity_total_issues   = 'Общее количество инцидентов';
+$s_plugin_Activity_total_notes    = 'Общее количество сообщений';
