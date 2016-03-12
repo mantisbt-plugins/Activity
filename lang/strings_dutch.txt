@@ -50,4 +50,4 @@ $s_plugin_Activity_disabled = 'Uit';
 $s_plugin_Activity_issues   = 'Meldingen';
 $s_plugin_Activity_opmerkingen    = 'Opmerkingen';
 $s_plugin_Activity_total_issues   = 'Totaal meldingen';
-$s_plugin_Activity_total_opmerkingen    = 'Totaal opmerkingen';
+$s_plugin_Activity_total_notes    = 'Totaal opmerkingen';
