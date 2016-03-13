@@ -1,0 +1,53 @@
+<?php
+/** MantisBT - a php based bugtracking system
+ *
+ * Copyright (C) 2002 - 2014  MantisBT Team - mantisbt-dev@lists.sourceforge.net
+ *
+ * MantisBT is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * MantisBT is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with MantisBT.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+/** Dutch (Netherlands)
+ *
+ * See the qqq 'language' for message documentation incl. usage of parameters
+ * To improve a translation please visit http://translatewiki.net
+ *
+ * @ingroup Language
+ * @file
+ *
+ * @author Tom Rowel, tomr@proguide.nl
+ */
+
+$s_plugin_Activity_title = 'Activiteit';
+$s_plugin_Activity_config = 'Configuratie';
+$s_plugin_Activity_description = 'Toon opmerkingen op datum.';
+$s_plugin_Activity_activity   = 'Activiteit';
+$s_plugin_Activity_get_info_button = 'Selecteer opmerkingen';
+$s_plugin_Activity_lbl_show_status_legend = 'Toon status legenda';
+$s_plugin_Activity_lbl_show_avatar = 'Toon avatar';
+$s_plugin_Activity_lbl_limit_bug_opmerkingen = 'Limiteer opmerkingen';
+$s_plugin_Activity_lbl_day_count = 'Aantal dagen in filter (standaard)';
+$s_plugin_Activity_lbl_notify = 'Verzend opmerkingen van gebruiker per email <small>(voeg toe aan cron script "php [mantis root]/plugins/Activity/scripts/notify.php")</small>';
+$s_plugin_Activity_lbl_notify_login = 'Voer geplande script uit onder het account van';
+$s_plugin_Activity_lbl_notify_subject = 'Onderwerp van de email';
+$s_plugin_Activity_lbl_notify_project    = 'Project';
+$s_plugin_Activity_lbl_notify_users    = 'Managers';
+$s_plugin_Activity_lbl_notify_note_users    = 'Opmerking van';
+$s_plugin_Activity_lbl_notify_use_html    = 'Gebruik HTML messages';
+$s_plugin_Activity_lbl_notify_path    = 'URL van de MantisBT installatie (example: http://mantisbt.org/bugs/)';
+$s_plugin_Activity_enabled = 'Aan';
+$s_plugin_Activity_disabled = 'Uit';
+$s_plugin_Activity_issues   = 'Meldingen';
+$s_plugin_Activity_opmerkingen    = 'Opmerkingen';
+$s_plugin_Activity_total_issues   = 'Totaal meldingen';
+$s_plugin_Activity_total_notes    = 'Totaal opmerkingen';
