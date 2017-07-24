@@ -1,13 +1,11 @@
-.activity-item {
-    margin-left: 1px;
-}
-
 .activity-date, .activity-avatar {
     color: gray;
     font-size: 8pt;
     padding: 5px;
 }
-
+.activity-project .widget-title a {
+    color: white !important;
+}
 .activity-table .avatar {
     float: none;
 }

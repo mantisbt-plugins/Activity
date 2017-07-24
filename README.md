@@ -1,11 +1,12 @@
 Activity
 ================
 
-Activity Plugin for MantisBT v1.2
+Activity Plugin for MantisBT v2.0
 By Sergey Marchenko (sergey@mzsl.ru)
 
 
-Shows bug notes by creation date.
+The plugin shows user messages by creation date, user and project. 
+It groups all messages by issue.
 
 Install
 ================
