@@ -40,7 +40,7 @@ class ActivityPlugin extends MantisPlugin {
 		$this->page        = 'config';
 
 		$this->version  = '1.0';
-		$this->requires = array('MantisCore' => '1.2.0',);
+		$this->requires = array('MantisCore' => '2.0.0',);
 
 		$this->author  = 'Sergey Marchenko';
 		$this->contact = 'sergey@mzsl.ru';
@@ -51,14 +51,20 @@ class ActivityPlugin extends MantisPlugin {
 	 * Default plugin configuration.
 	 */
 	function hooks() {
-		$hooks = array('EVENT_MENU_MAIN' => 'activity_menu',
+		$hooks = array('EVENT_MENU_MAIN' => 'menu',
 					   'EVENT_LAYOUT_RESOURCES' => 'resources');
 
 		return $hooks;
 	}
 
-	function activity_menu() {
-		return array('<a href="' . plugin_page( 'activity_page' ) . '">' . plugin_lang_get( 'activity' ) . '</a>',);
+	function menu() {
+		$links = array();
+		$links[] = array(
+			'title' => plugin_lang_get( 'activity' ),
+			'url'   => plugin_page( 'activity_page' ),
+			'icon'  => 'fa-list'
+		);
+		return $links;
 	}
 
 	function init() {
@@ -85,7 +91,8 @@ class ActivityPlugin extends MantisPlugin {
 	 * Create the resource link to load the jQuery library.
 	 */
 	function resources( $p_event ) {
-		return '<link rel="stylesheet" type="text/css" href="' . plugin_file( 'activity.css' ) . '"/>';
+		return '<link rel="stylesheet" type="text/css" href="' . plugin_file( 'activity.css' ) . '"/>' .
+                '<script src="' . plugin_file( 'activity.js' ) . '"></script>';
 	}
 
 }
