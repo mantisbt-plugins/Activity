@@ -190,7 +190,6 @@ $t_show_status_legend   = plugin_config_get( 'show_status_legend' );
 $t_show_avatar          = plugin_config_get( 'show_avatar', config_get( 'show_avatar', OFF ) );
 $t_limit_bug_notes      = (int)plugin_config_get( 'limit_bug_notes', 1000 );
 $t_update_bug_threshold = config_get( 'update_bug_threshold' );
-$t_icon_path            = config_get( 'icon_path' );
 $t_show_priority_text   = config_get( 'show_priority_text' );
 $t_use_javascript       = config_get( 'use_javascript', ON );
 
